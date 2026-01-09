@@ -48,3 +48,64 @@ lib/
 └── views/           # Camada de UI (Telas e Widgets)
     ├── screens/
     └── widgets/
+```
+
+---
+
+## ✅ Testes Automatizados
+A estabilidade do projeto é garantida por uma suíte de Testes Unitários cobrindo as camadas críticas da aplicação.
+
+Para executar os testes:
+
+```bash
+flutter test
+```
+### Cobertura dos Testes:
+
+**Models:** Validação de conversão JSON/Objeto e tratamento de campos nulos.
+
+**ApiClient:** Simulação de cenários de Sucesso (200), Erro de Cliente (404) e Erro de Servidor (500) usando Mocks.
+
+**Repository:** Garantia de integração correta entre o Cliente HTTP e os Modelos.
+
+**ViewModel:** Testes de lógica de estado, incluindo paginação, busca, estados de loading e captura de erros.
+
+---
+
+## 🚀 Como Rodar o Projeto
+### Pré-requisitos
+
+Flutter SDK instalado (Canal Stable).
+
+Emulador Android/iOS ou dispositivo físico.
+
+### Passo a Passo
+
+Clone o repositório:
+
+```bash
+git clone [https://github.com/GuilhermeTofino/paysmart_challenge.git](https://github.com/GuilhermeTofino/paysmart_challenge.git)
+cd paysmart_challenge
+```
+Instale as dependências:
+
+```bash
+flutter pub get
+```
+
+
+### Execute o app:
+
+```bash
+flutter run
+```
+**Nota:** A API Key do TMDb já está configurada internamente no arquivo ApiConstants para facilitar a avaliação deste desafio. Em um ambiente de produção real, chaves sensíveis seriam injetadas via variáveis de ambiente (--dart-define) ou arquivos de configuração seguros.
+
+---
+
+## 👨‍💻 Autor
+### Desenvolvido por Guilherme Pulcino Tofino.
+
+**LinkedIn:** guilherme-tofino-dev
+
+**GitHub:** @GuilhermeTofino
