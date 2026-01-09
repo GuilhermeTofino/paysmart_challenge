@@ -1,0 +1,60 @@
+name: paysmart_challenge
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+
+  http: ^1.2.0
+  intl: ^0.19.0
+  cached_network_image: ^3.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.3.10
+  mockito: ^5.4.4
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/
+
+# --- CONFIGURAÇÃO DOS ÍCONES ---
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icon.png" 
+  min_sdk_android: 21
+  adaptive_icon_background: "#121212" 
+  adaptive_icon_foreground: "assets/icon.png" 
+  remove_alpha_ios: true
+
+# Configuração da Splash Screen
+flutter_native_splash:
+  color: "#121212" # Fundo escuro igual ao do app
+  image: "assets/icon.png"
+  
+  # Configuração específica para Android 12+
+  android_12:
+    image: "assets/icon.png"
+    color: "#121212"
+    icon_background_color: "#121212"
+  
+  # Garante tela cheia
+  fullscreen: true
