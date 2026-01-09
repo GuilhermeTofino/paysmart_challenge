@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paysmart_challenge/views/widgets/rating_circle.dart';
 import '../../models/movie_model.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -70,18 +71,42 @@ class MovieDetailsScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(
-                        Icons.calendar_today,
-                        size: 16,
-                        color: Colors.red,
+                      RatingCircle(
+                        voteAverage: movie.voteAverage,
+                        size: 50,
+                        fontSize: 16,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Lançamento: $formattedDate',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 16,
-                        ),
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Avaliação dos usuários',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_today,
+                                size: 14,
+                                color: Colors.white70,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                formattedDate,
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),

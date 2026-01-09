@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paysmart_challenge/views/widgets/rating_circle.dart';
 import '../../viewmodels/movie_viewmodel.dart';
 import 'movie_details_screen.dart';
 
@@ -28,15 +29,17 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _scrollController.dispose();
     _searchController.dispose();
-    _viewModel.dispose(); 
+    _viewModel.dispose();
     super.dispose();
   }
+
   void _onScroll() {
-    if (_scrollController.position.pixels >= 
+    if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
       _viewModel.loadMoreMovies();
     }
   }
+
   void _toggleSearch() {
     setState(() {
       _isSearchBarVisible = !_isSearchBarVisible;
@@ -89,14 +92,22 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   const Icon(Icons.sentiment_dissatisfied, size: 48, color: Colors.grey),
-                   const SizedBox(height: 16),
-                   Text(_viewModel.error!, style: const TextStyle(color: Colors.white70)),
-                   const SizedBox(height: 16),
-                   ElevatedButton(
-                     onPressed: () => _viewModel.searchMovies(_searchController.text), 
-                     child: const Text('Tentar Novamente')
-                   )
+                  const Icon(
+                    Icons.sentiment_dissatisfied,
+                    size: 48,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _viewModel.error!,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () =>
+                        _viewModel.searchMovies(_searchController.text),
+                    child: const Text('Tentar Novamente'),
+                  ),
                 ],
               ),
             );
@@ -104,13 +115,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (_viewModel.movies.isEmpty) {
             return const Center(
-              child: Text('Nenhum filme encontrado.', style: TextStyle(color: Colors.white)),
+              child: Text(
+                'Nenhum filme encontrado.',
+                style: TextStyle(color: Colors.white),
+              ),
             );
           }
 
           return ListView.builder(
             controller: _scrollController,
-            itemCount: _viewModel.movies.length + (_viewModel.isLoadingMore ? 1 : 0),
+            itemCount:
+                _viewModel.movies.length + (_viewModel.isLoadingMore ? 1 : 0),
             itemBuilder: (context, index) {
               if (index == _viewModel.movies.length) {
                 return const Padding(
@@ -120,6 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }
 
               final movie = _viewModel.movies[index];
+
               String formattedDate = 'Data a definir';
               try {
                 if (movie.releaseDate.isNotEmpty) {
@@ -131,10 +147,12 @@ class _HomeScreenState extends State<HomeScreen> {
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 color: const Color(0xFF2C2C2C),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: InkWell(
                   onTap: () {
-                     Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MovieDetailsScreen(movie: movie),
@@ -144,27 +162,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          bottomLeft: Radius.circular(12),
-                        ),
-                        child: CachedNetworkImage(
-                          imageUrl: movie.fullPosterUrl,
-                          width: 100,
-                          height: 150,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Container(
-                            color: Colors.grey[800], 
-                            width: 100, height: 150,
-                            child: const Icon(Icons.movie),
+                      Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              bottomLeft: Radius.circular(12),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: movie.fullPosterUrl,
+                              width: 100,
+                              height: 150,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Container(
+                                color: Colors.grey[800],
+                                width: 100,
+                                height: 150,
+                                child: const Icon(Icons.movie),
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.grey[800],
+                                width: 100,
+                                height: 150,
+                                child: const Icon(Icons.broken_image),
+                              ),
+                            ),
                           ),
-                          errorWidget: (context, url, error) => Container(
-                            color: Colors.grey[800],
-                            width: 100, height: 150,
-                            child: const Icon(Icons.broken_image),
+                          Positioned(
+                            bottom: 2,
+                            left: 2,
+                            child: RatingCircle(
+                              voteAverage: movie.voteAverage,
+                              size: 40,
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                       Expanded(
                         child: Padding(
@@ -175,9 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 movie.title,
                                 style: const TextStyle(
-                                  fontSize: 18, 
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white
+                                  color: Colors.white,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -190,7 +222,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 movie.overview,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(color: Colors.white70, fontSize: 12),
+                                style: const TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 12,
+                                ),
                               ),
                             ],
                           ),
